@@ -137,6 +137,12 @@
             text-align: right;
         }
 
+        .display-value.deposit {
+            background-color: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+
         .with-comment {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -309,6 +315,10 @@
                     <label>Cigarette Coupon</label>
                     <input type="number" id="cigaretteCoup" name="cigaretteCoup" step="0.01" placeholder="0.00">
                 </div>
+                <div class="form-group">
+                    <label>Deposit OPS (Auto-calculated)</label>
+                    <div class="display-value deposit" id="depositOpsDisplay">0.00</div>
+                </div>
             </div>
 
             <!-- Gas Section -->
@@ -325,6 +335,10 @@
                 <div class="form-group">
                     <label>Credit/Debit</label>
                     <input type="number" id="creditDebit" name="creditDebit" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Deposit Gas (Auto-calculated)</label>
+                    <div class="display-value deposit" id="depositGasDisplay">0.00</div>
                 </div>
             </div>
 
@@ -345,6 +359,10 @@
                 </div>
                 <div id="suggestedDepositBox" class="suggestion-box" style="display: none;">
                     Suggested Deposit in Lottery Acc: <span id="suggestedDepositAmount">0.00</span>
+                </div>
+                <div class="form-group">
+                    <label>Deposit Lotto (Auto-calculated)</label>
+                    <div class="display-value deposit" id="depositLottoDisplay">0.00</div>
                 </div>
             </div>
 
@@ -381,6 +399,13 @@
         // Auto-calculate displays
         document.getElementById('sixPercentSales').addEventListener('input', updateCalculations);
         document.getElementById('nonTax').addEventListener('input', updateCalculations);
+        document.getElementById('moIn').addEventListener('input', updateCalculations);
+        document.getElementById('cashPayOutAmount').addEventListener('input', updateCalculations);
+        document.getElementById('ebtCardIn').addEventListener('input', updateCalculations);
+        document.getElementById('atmCashOut').addEventListener('input', updateCalculations);
+        document.getElementById('cigaretteCoup').addEventListener('input', updateCalculations);
+        document.getElementById('gasSales').addEventListener('input', updateCalculations);
+        document.getElementById('creditDebit').addEventListener('input', updateCalculations);
         document.getElementById('scratchOff').addEventListener('input', updateSuggestion);
         document.getElementById('onlineLotto').addEventListener('input', updateSuggestion);
         document.getElementById('lottoPayout').addEventListener('input', updateSuggestion);
@@ -388,12 +413,34 @@
         function updateCalculations() {
             const sixPercent = parseFloat(document.getElementById('sixPercentSales').value) || 0;
             const nonTax = parseFloat(document.getElementById('nonTax').value) || 0;
+            const moIn = parseFloat(document.getElementById('moIn').value) || 0;
+            const cashPayOut = parseFloat(document.getElementById('cashPayOutAmount').value) || 0;
+            const ebtCardIn = parseFloat(document.getElementById('ebtCardIn').value) || 0;
+            const atmCashOut = parseFloat(document.getElementById('atmCashOut').value) || 0;
+            const cigaretteCoup = parseFloat(document.getElementById('cigaretteCoup').value) || 0;
+            const gasSales = parseFloat(document.getElementById('gasSales').value) || 0;
+            const creditDebit = parseFloat(document.getElementById('creditDebit').value) || 0;
+            const scratchOff = parseFloat(document.getElementById('scratchOff').value) || 0;
+            const onlineLotto = parseFloat(document.getElementById('onlineLotto').value) || 0;
+            const lottoPayout = parseFloat(document.getElementById('lottoPayout').value) || 0;
             
             const totalSales = sixPercent + nonTax;
             const tax = sixPercent * 0.06;
             
+            // Deposit OPS = (Total Sales + Tax + MO) - Cash Pay Out - EBT - ATM - Cigarette Coup
+            const depositOps = (totalSales + tax + moIn) - cashPayOut - ebtCardIn - atmCashOut - cigaretteCoup;
+            
+            // Deposit Gas = Gas Sales - Credit/Debit
+            const depositGas = gasSales - creditDebit;
+            
+            // Deposit Lotto = Scratch Off + Online Lotto - Lotto Payout
+            const depositLotto = (scratchOff + onlineLotto) - lottoPayout;
+            
             document.getElementById('totalSalesDisplay').textContent = totalSales.toFixed(2);
             document.getElementById('taxDisplay').textContent = tax.toFixed(2);
+            document.getElementById('depositOpsDisplay').textContent = depositOps.toFixed(2);
+            document.getElementById('depositGasDisplay').textContent = depositGas.toFixed(2);
+            document.getElementById('depositLottoDisplay').textContent = depositLotto.toFixed(2);
         }
 
         function updateSuggestion() {
