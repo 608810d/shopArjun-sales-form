@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Sales Data Entry - ShopArjun</title>
+    <title>ShopArjun Daily Sales Entry</title>
     <style>
         * {
             margin: 0;
@@ -36,10 +36,15 @@
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 24px;
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .subtitle {
@@ -59,6 +64,10 @@
             font-size: 14px;
         }
 
+        .required {
+            color: red;
+        }
+
         input[type="text"],
         input[type="number"],
         select {
@@ -68,7 +77,7 @@
             border-radius: 6px;
             font-size: 14px;
             font-family: inherit;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.3s;
         }
 
         input[type="text"]:focus,
@@ -85,31 +94,24 @@
             gap: 20px;
         }
 
-        .field-group {
+        .section {
             background: #f9f9f9;
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 15px;
         }
 
-        .field-group h3 {
+        .section-title {
             font-size: 12px;
             color: #667eea;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
             letter-spacing: 0.5px;
         }
 
-        .field-group input {
-            margin-bottom: 10px;
-        }
-
-        .field-group input:last-child {
-            margin-bottom: 0;
-        }
-
-        .submit-section {
-            margin-top: 30px;
+        .section .form-group {
+            margin-bottom: 12px;
         }
 
         button {
@@ -123,6 +125,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
         }
 
         button:hover {
@@ -136,131 +139,63 @@
             transform: none;
         }
 
-        .status-box {
+        .status-message {
             margin-top: 20px;
             padding: 15px;
             border-radius: 6px;
             display: none;
-            font-size: 14px;
+            text-align: center;
+            font-weight: 600;
         }
 
-        .status-box.success {
+        .status-message.success {
             background: #d4edda;
             border: 2px solid #28a745;
             color: #155724;
-            display: block;
         }
 
-        .status-box.error {
+        .status-message.error {
             background: #f8d7da;
             border: 2px solid #dc3545;
             color: #721c24;
-            display: block;
-        }
-
-        .status-box.info {
-            background: #d1ecf1;
-            border: 2px solid #17a2b8;
-            color: #0c5460;
-            display: block;
-        }
-
-        .status-icon {
-            font-size: 20px;
-            margin-right: 10px;
-        }
-
-        .verification-code {
-            margin-top: 15px;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            word-break: break-all;
-            color: #666;
         }
 
         .spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             border: 3px solid #f3f3f3;
             border-top: 3px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-right: 10px;
+            vertical-align: middle;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        .tally-status {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 6px;
-            background: #f0f0f0;
-            border: 2px dashed #999;
-        }
-
-        .tally-status h4 {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .tally-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .tally-check {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        .tally-check.pending {
-            background: #ffc107;
-            color: white;
-        }
-
-        .tally-check.verified {
-            background: #28a745;
-            color: white;
-        }
-
-        .required {
-            color: #dc3545;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">📊 ShopArjun</div>
-            <div class="subtitle">Daily Sales Data Entry Portal</div>
+            <div class="logo">📊</div>
+            <div class="title">ShopArjun</div>
+            <div class="subtitle">Daily Sales Entry Form</div>
         </div>
 
         <form id="salesForm">
+            <!-- Required Fields -->
             <div class="two-column">
                 <div class="form-group">
-                    <label for="storeId">Store ID <span class="required">*</span></label>
+                    <label>Store ID <span class="required">*</span></label>
                     <input type="text" id="storeId" name="storeId" placeholder="e.g., KC Mart # 9" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="month">Month <span class="required">*</span></label>
+                    <label>Month <span class="required">*</span></label>
                     <select id="month" name="month" required>
                         <option value="">Select Month</option>
                         <option value="January">January</option>
@@ -280,185 +215,166 @@
             </div>
 
             <div class="form-group">
-                <label for="day">Day of Month <span class="required">*</span></label>
-                <input type="number" id="day" name="day" min="1" max="31" placeholder="1-31" required>
+                <label>Date (Day 1-31) <span class="required">*</span></label>
+                <input type="number" id="date" name="date" min="1" max="31" placeholder="5" required>
             </div>
 
-            <div class="field-group">
-                <h3>📈 Sales Data</h3>
-                <label for="sixPercentSales">6% Sales</label>
-                <input type="number" id="sixPercentSales" name="sixPercentSales" step="0.01" placeholder="0.00">
-
-                <label for="nonTax">Non-Tax Sales</label>
-                <input type="number" id="nonTax" name="nonTax" step="0.01" placeholder="0.00">
-            </div>
-
-            <div class="field-group">
-                <h3>🎰 Department Sales</h3>
-                <label for="lottery">Lottery</label>
-                <input type="number" id="lottery" name="lottery" step="0.01" placeholder="0.00">
-
-                <label for="fuel">Fuel</label>
-                <input type="number" id="fuel" name="fuel" step="0.01" placeholder="0.00">
-
-                <label for="carWash">Car Wash</label>
-                <input type="number" id="carWash" name="carWash" step="0.01" placeholder="0.00">
-            </div>
-
-            <div class="field-group">
-                <h3>💰 Deposits</h3>
-                <label for="depInOps">Deposit in Operations</label>
-                <input type="number" id="depInOps" name="depInOps" step="0.01" placeholder="0.00">
-
-                <label for="depInLotto">Deposit in Lottery</label>
-                <input type="number" id="depInLotto" name="depInLotto" step="0.01" placeholder="0.00">
-            </div>
-
-            <div class="submit-section">
-                <button type="submit" id="submitBtn">Submit Daily Sales Data</button>
-            </div>
-
-            <div id="statusBox" class="status-box"></div>
-
-            <div id="tallyStatus" class="tally-status" style="display: none;">
-                <h4>📋 Data Tally Status</h4>
-                <div class="tally-indicator">
-                    <div class="tally-check pending" id="tallyCheck">⏳</div>
-                    <span id="tallyMessage">Checking if data has been recorded...</span>
+            <!-- Sales Data -->
+            <div class="section">
+                <div class="section-title">📈 Sales Data</div>
+                <div class="form-group">
+                    <label>6% Sales</label>
+                    <input type="number" id="sixPercentSales" name="sixPercentSales" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Non-Tax Sales</label>
+                    <input type="number" id="nonTax" name="nonTax" step="0.01" placeholder="0.00">
                 </div>
             </div>
+
+            <!-- Cash Section -->
+            <div class="section">
+                <div class="section-title">💰 Cash & Operations</div>
+                <div class="form-group">
+                    <label>MO In</label>
+                    <input type="number" id="moIn" name="moIn" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Cash Pay Out</label>
+                    <input type="number" id="cashPayOut" name="cashPayOut" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>EBT/Card In</label>
+                    <input type="number" id="ebtCardIn" name="ebtCardIn" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>ATM/Cash Out</label>
+                    <input type="number" id="atmCashOut" name="atmCashOut" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Cigarette Coupon</label>
+                    <input type="number" id="cigaretteCoup" name="cigaretteCoup" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+
+            <!-- Gas Section -->
+            <div class="section">
+                <div class="section-title">⛽ Gas</div>
+                <div class="form-group">
+                    <label>Gas Gallons</label>
+                    <input type="number" id="gasGallons" name="gasGallons" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Gas Sales</label>
+                    <input type="number" id="gasSales" name="gasSales" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Credit/Debit</label>
+                    <input type="number" id="creditDebit" name="creditDebit" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+
+            <!-- Lotto Section -->
+            <div class="section">
+                <div class="section-title">🎰 Lottery</div>
+                <div class="form-group">
+                    <label>Scratch Off Sales</label>
+                    <input type="number" id="scratchOff" name="scratchOff" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Online Lotto</label>
+                    <input type="number" id="onlineLotto" name="onlineLotto" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Lotto Payout</label>
+                    <input type="number" id="lottoPayout" name="lottoPayout" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+
+            <!-- Deposits Section -->
+            <div class="section">
+                <div class="section-title">🏦 Deposits & Other</div>
+                <div class="form-group">
+                    <label>House Charge</label>
+                    <input type="number" id="houseCharge" name="houseCharge" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Deposit in Operations</label>
+                    <input type="number" id="depInOps" name="depInOps" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Deposit in Lottery</label>
+                    <input type="number" id="depInLotto" name="depInLotto" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Daily Sales</button>
+            <div id="statusMessage" class="status-message"></div>
         </form>
     </div>
 
     <script>
-        // Replace with your deployed Google Apps Script URL
+        const GOOGLE_SHEET_ID = "1LX6QNImchjUqVZ8N8KEQO2iBwDYmH-I3gPFM6HBctbw";
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDNojr2AHSwKOKGDSaQBaeIq7ylgObs1kNGIRBogB3KaF3ka64O_aj36sqzMZG1J5rfg/exec";
 
         const form = document.getElementById('salesForm');
-        const statusBox = document.getElementById('statusBox');
         const submitBtn = document.getElementById('submitBtn');
-        const tallyStatus = document.getElementById('tallyStatus');
-        const tallyCheck = document.getElementById('tallyCheck');
-        const tallyMessage = document.getElementById('tallyMessage');
+        const statusMessage = document.getElementById('statusMessage');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Clear previous status
-            statusBox.className = 'status-box';
-            tallyStatus.style.display = 'none';
-
-            // Disable submit button
+            statusMessage.style.display = 'none';
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.innerHTML = '<span class="spinner"></span>Submitting...';
 
-            // Collect form data
             const formData = {
                 storeId: document.getElementById('storeId').value,
                 month: document.getElementById('month').value,
-                day: document.getElementById('day').value,
+                date: document.getElementById('date').value,
                 sixPercentSales: parseFloat(document.getElementById('sixPercentSales').value) || null,
                 nonTax: parseFloat(document.getElementById('nonTax').value) || null,
-                lottery: parseFloat(document.getElementById('lottery').value) || null,
-                fuel: parseFloat(document.getElementById('fuel').value) || null,
-                carWash: parseFloat(document.getElementById('carWash').value) || null,
+                moIn: parseFloat(document.getElementById('moIn').value) || null,
+                cashPayOut: parseFloat(document.getElementById('cashPayOut').value) || null,
+                ebtCardIn: parseFloat(document.getElementById('ebtCardIn').value) || null,
+                atmCashOut: parseFloat(document.getElementById('atmCashOut').value) || null,
+                cigaretteCoup: parseFloat(document.getElementById('cigaretteCoup').value) || null,
+                gasGallons: parseFloat(document.getElementById('gasGallons').value) || null,
+                gasSales: parseFloat(document.getElementById('gasSales').value) || null,
+                creditDebit: parseFloat(document.getElementById('creditDebit').value) || null,
+                scratchOff: parseFloat(document.getElementById('scratchOff').value) || null,
+                onlineLotto: parseFloat(document.getElementById('onlineLotto').value) || null,
+                lottoPayout: parseFloat(document.getElementById('lottoPayout').value) || null,
+                houseCharge: parseFloat(document.getElementById('houseCharge').value) || null,
                 depInOps: parseFloat(document.getElementById('depInOps').value) || null,
                 depInLotto: parseFloat(document.getElementById('depInLotto').value) || null
             };
 
             try {
-                // Submit data to Apps Script
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'no-cors',
                     body: JSON.stringify(formData),
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
 
-                const result = await response.json();
+                statusMessage.className = 'status-message success';
+                statusMessage.innerHTML = '✅ Success! Your sales data has been submitted and recorded.';
+                statusMessage.style.display = 'block';
 
-                if (result.success) {
-                    // Show success message
-                    statusBox.className = 'status-box success';
-                    statusBox.innerHTML = `
-                        <div>
-                            <span class="status-icon">✅</span>
-                            <strong>Success!</strong> ${result.message}
-                        </div>
-                        <div class="verification-code">
-                            Verification Code: ${result.verificationCode}
-                        </div>
-                    `;
+                form.reset();
 
-                    // Start checking tally status
-                    checkTallyStatus(formData);
-
-                    // Reset form
-                    form.reset();
-                } else {
-                    // Show error message
-                    statusBox.className = 'status-box error';
-                    statusBox.innerHTML = `
-                        <span class="status-icon">❌</span>
-                        <strong>Error:</strong> ${result.message}
-                    `;
-                }
             } catch (error) {
-                statusBox.className = 'status-box error';
-                statusBox.innerHTML = `
-                    <span class="status-icon">❌</span>
-                    <strong>Error:</strong> ${error.message}
-                `;
+                statusMessage.className = 'status-message error';
+                statusMessage.innerHTML = '❌ Error: ' + error.message;
+                statusMessage.style.display = 'block';
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Daily Sales Data';
+                submitBtn.innerHTML = 'Submit Daily Sales';
             }
         });
-
-        // Function to check if data has been tallied
-        async function checkTallyStatus(formData) {
-            tallyStatus.style.display = 'block';
-            tallyCheck.className = 'tally-check pending';
-            tallyCheck.textContent = '⏳';
-            tallyMessage.textContent = 'Checking if data has been recorded...';
-
-            // Check every 3 seconds for up to 30 seconds
-            let attempts = 0;
-            const maxAttempts = 10;
-
-            const checkInterval = setInterval(async () => {
-                attempts++;
-
-                try {
-                    const response = await fetch(
-                        `${APPS_SCRIPT_URL}?storeId=${encodeURIComponent(formData.storeId)}&month=${encodeURIComponent(formData.month)}&day=${formData.day}`
-                    );
-
-                    const result = await response.json();
-
-                    if (result.verified) {
-                        // Data has been recorded
-                        clearInterval(checkInterval);
-                        tallyCheck.className = 'tally-check verified';
-                        tallyCheck.textContent = '✅';
-                        tallyMessage.textContent = 'Data has been successfully recorded and tallied!';
-                    } else if (attempts >= maxAttempts) {
-                        // Stop checking after max attempts
-                        clearInterval(checkInterval);
-                        tallyCheck.className = 'tally-check pending';
-                        tallyCheck.textContent = '⏱';
-                        tallyMessage.textContent = 'Status check complete. Data may still be processing.';
-                    }
-                } catch (error) {
-                    if (attempts >= maxAttempts) {
-                        clearInterval(checkInterval);
-                        tallyCheck.textContent = '⚠';
-                        tallyMessage.textContent = 'Could not verify status. Please contact support.';
-                    }
-                }
-            }, 3000);
-        }
     </script>
 </body>
 </html>
